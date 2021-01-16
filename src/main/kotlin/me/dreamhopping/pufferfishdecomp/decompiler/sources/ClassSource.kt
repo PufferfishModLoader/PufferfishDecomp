@@ -1,12 +1,13 @@
-package me.dreamhopping.pufferfishdecomp.decompiler
+package me.dreamhopping.pufferfishdecomp.decompiler.sources
 
 import org.objectweb.asm.tree.ClassNode
+import java.io.File
 
 interface ClassSource {
     /**
      * Returns a list of entries
      */
-    fun discoverClasses(): List<String>
+    fun discoverClasses(source: File): List<String>
 
     /**
      * Return class node for entry

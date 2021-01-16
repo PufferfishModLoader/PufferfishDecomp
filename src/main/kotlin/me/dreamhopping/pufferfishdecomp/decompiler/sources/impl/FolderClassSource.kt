@@ -1,14 +1,14 @@
-package me.dreamhopping.pufferfishdecomp.decompiler.impl
+package me.dreamhopping.pufferfishdecomp.decompiler.sources.impl
 
-import me.dreamhopping.pufferfishdecomp.decompiler.ClassSource
+import me.dreamhopping.pufferfishdecomp.decompiler.sources.ClassSource
 import org.objectweb.asm.ClassReader
 import org.objectweb.asm.tree.ClassNode
 import java.io.File
 
-class FolderClassSource(val source: File) : ClassSource {
+class FolderClassSource : ClassSource {
     override val supportedExtensions: List<String> = listOf("")
 
-    override fun discoverClasses(): List<String> {
+    override fun discoverClasses(source: File): List<String> {
         val classes = mutableListOf<String>()
 
         source.listFiles()?.forEach { file ->

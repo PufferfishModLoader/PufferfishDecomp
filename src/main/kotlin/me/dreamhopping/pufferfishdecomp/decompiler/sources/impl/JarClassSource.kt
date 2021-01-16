@@ -1,18 +1,20 @@
-package me.dreamhopping.pufferfishdecomp.decompiler.impl
+package me.dreamhopping.pufferfishdecomp.decompiler.sources.impl
 
-import me.dreamhopping.pufferfishdecomp.decompiler.ClassSource
+import me.dreamhopping.pufferfishdecomp.decompiler.sources.ClassSource
 import org.objectweb.asm.ClassReader
 import org.objectweb.asm.tree.ClassNode
 import java.io.File
 import java.util.zip.ZipFile
 
-class JarClassSource(source: File) : ClassSource {
+class JarClassSource : ClassSource {
     override val supportedExtensions: List<String> = listOf(".jar", ".zip")
 
-    private val zipFile = ZipFile(source)
+    private lateinit var zipFile: ZipFile
 
-    override fun discoverClasses(): List<String> =
-        zipFile.entries().toList().filter { it.name.endsWith(".class") }.map { it.name }
+    override fun discoverClasses(source: File): List<String> {
+        zipFile = ZipFile(source)
+        return zipFile.entries().toList().filter { it.name.endsWith(".class") }.map { it.name }
+    }
 
     override fun getClass(name: String): ClassNode? {
         val entry = zipFile.getEntry(name) ?: return null
